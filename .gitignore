@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Environnement local et secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Outils et systèmes
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# Dépendances et sorties temporaires
+node_modules/
+coverage/
+.pytest_cache/

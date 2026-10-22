@@ -1,0 +1,75 @@
+COACH OLOU — CODE SOURCE ET DÉPLOIEMENT
+Export du 22 octobre 2026 — version publiée 1
+
+1. CONTENU DE L’ARCHIVE
+- dist/ : site complet prêt à être hébergé (7 pages publiques, une page 404, CSS, JavaScript, portrait).
+- build_content.py : générateur Python des pages, utile pour modifier les textes communs.
+- README.md : notes de contenu et points à valider.
+- INSTALLATION.txt : ce guide.
+- check_site.py : contrôles locaux à lancer avant chaque mise en ligne.
+
+2. INSTALLATION SUR VOTRE HÉBERGEMENT
+1) Décompressez cette archive sur votre ordinateur.
+2) Dans le panneau de votre hébergeur, identifiez le dossier web associé à votre domaine
+   (souvent public_html, www ou htdocs ; le nom dépend de votre hébergeur).
+3) Si un site existe déjà, sauvegardez ses fichiers avant tout remplacement.
+4) Transférez LE CONTENU de dist/ dans le dossier web choisi, via SFTP ou le gestionnaire
+   de fichiers. index.html doit être directement dans ce dossier, avec style.css,
+   site.js, les autres pages HTML, la page 404 et le sous-dossier assets/. Conservez
+   .htaccess si votre serveur est Apache. Le fichier _headers est prévu pour Netlify
+   ou un hébergeur compatible.
+5) N’envoyez pas build_content.py, README.md ou ce guide dans le dossier public.
+6) Associez votre domaine au site dans le panneau de l’hébergeur. Appliquez uniquement
+   les paramètres DNS fournis par cet hébergeur. Conservez les réglages de messagerie
+   existants (notamment MX, SPF, DKIM et DMARC).
+7) Activez le certificat SSL pour le domaine et, si utilisé, www. Une fois HTTPS
+   opérationnel, activez la redirection HTTP vers HTTPS depuis votre hébergeur.
+8) Vérifiez la page d’accueil, les six autres pages, le menu mobile, le portrait,
+   les filtres de projets, WhatsApp, la page 404 et le formulaire de contact.
+
+Le dossier dist/ peut aussi être configuré comme racine web sur Apache ou Nginx.
+Aucune compilation, installation npm, base de données, PHP ou connexion à ChatGPT
+n’est nécessaire pour servir ce site. Ce n’est pas un thème WordPress.
+Les en-têtes de sécurité fournis supposent que le HTTPS est déjà activé. Sur Nginx,
+reportez les mêmes directives dans la configuration du serveur ; ne rendez pas le
+fichier de configuration Nginx public.
+L’accès privé de Sites n’accompagne pas cet export : le site sera accessible selon
+les règles de votre propre hébergement. Configurez une protection chez l’hébergeur
+si vous souhaitez garder une version de test privée.
+
+3. MODIFIER LE SITE
+- Textes/pages : fichiers dist/*.html, éditables directement.
+- Couleurs, mise en page et affichage mobile : dist/style.css.
+- Menu, filtres et préparation des emails : dist/site.js.
+- Portrait : dist/assets/euloge-olou.png.
+Alternative pour modifier les textes communs : éditer build_content.py, puis lancer
+« python3 build_content.py » depuis le dossier qui contient le script.
+ATTENTION : cette commande régénère les pages HTML et écrase leurs modifications
+manuelles. Choisissez une seule méthode pour garder vos modifications cohérentes.
+Le script n’est utile qu’à l’édition ; Python n’est pas requis sur le serveur web.
+
+4. CONTACT ET DÉPENDANCES
+- Email actuel : euloge@oloustream.com.
+- WhatsApp actuel : +226 64 09 31 96.
+- Le formulaire prépare un email dans la messagerie du visiteur. Il n’envoie pas
+  lui-même les messages et n’enregistre aucun prospect sur le serveur. Le visiteur
+  choisit entre ouvrir sa messagerie et copier le message.
+- Un véritable envoi serveur nécessiterait une intégration supplémentaire.
+- Les polices DM Sans et Manrope sont chargées depuis Google Fonts ; une police
+  de secours est prévue si le service n’est pas accessible.
+- WhatsApp ouvre un service externe.
+- Aucun identifiant Google Analytics, Pixel Meta ou service de réservation n’est connecté.
+- Aucun mot de passe, jeton d’accès ou historique Git n’est inclus dans cette archive.
+
+5. AVANT OUVERTURE PUBLIQUE
+Depuis le dossier source, lancer `python3 check_site.py`, puis vérifier aussi la
+syntaxe JavaScript avec `node --check dist/site.js`. Ne mettez pas `check_site.py`
+dans le dossier public.
+Confirmer les coordonnées et chiffres d’impact, relire les contenus, vérifier les
+informations de confidentialité adaptées à votre mise en ligne. Ajouter, si souhaité,
+la vidéo de présentation et une photographie plus récente.
+Le domaine et le serveur n’ont pas été configurés dans le cadre de cet export.
+
+PROVENANCE
+Source identique au commit publié : e3234a8408d27457795a15e8812eefcdb3d15ff0.
+Les fichiers du site ne sont pas modifiés par cet export.
