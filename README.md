@@ -17,6 +17,8 @@ Email euloge@oloustream.com et WhatsApp +226 64 09 31 96 issus du CV fourni. Le 
 - Aucune liaison au domaine eulogeolou.com effectuée.
 - `dist/.htaccess` et `dist/_headers` fournissent des protections HTTP pour Apache et les hébergeurs compatibles avec `_headers`.
 - `check_site.py` vérifie les fichiers, les liens locaux, les IDs et les éléments obligatoires avant publication.
+- Les expertises présentent maintenant leur public cible, leur déroulement, leurs livrables, une durée indicative, le résultat attendu et une demande de devis. Les durées restent à confirmer selon les offres réellement proposées.
+- Les boutons « Demander un devis » et « Décrire mon besoin » ouvrent le formulaire de contact ; aucun calendrier de réservation n’est encore connecté.
 
 ## Édition
 Les pages publiques sont dans dist. build_content.py génère le contenu commun et les pages ; dist/style.css et dist/site.js contiennent le style et les interactions. Aucun CMS tiers n'est installé ; modifications via Sites.
