@@ -40,41 +40,49 @@ if (form) {
   const map = { branding: 0, digital: 1, protection: 2, coaching: 3, Coaching: 3, Intervention: 4, Projet: 6 };
   if (Object.hasOwn(map, topic)) form.elements.subject.selectedIndex = map[topic];
 
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    const values = new FormData(form);
-    const body = `Bonjour Coach OLOU,\n\n${values.get('message')}\n\nNom : ${values.get('name')}\nEmail : ${values.get('email')}\nOrganisation : ${values.get('company') || 'Non renseignée'}`;
-    const subject = `Demande : ${values.get('subject')}`;
-    const mailto = `mailto:euloge@oloustream.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    const status = document.getElementById('formstatus');
+  let csrf = '';
+  const status = document.getElementById('formstatus');
+  const submit = form.querySelector('button[type="submit"]');
+
+  const showStatus = (message, success) => {
     if (!status) return;
-
     status.hidden = false;
-    status.className = 'success';
+    status.className = success ? 'success' : 'success';
     status.replaceChildren();
+    const paragraph = document.createElement('p');
+    paragraph.textContent = message;
+    status.append(paragraph);
+  };
 
-    const message = document.createElement('p');
-    message.textContent = 'Votre message est prêt. Ouvrez votre messagerie ou copiez le texte ci-dessous.';
+  fetch('/api/contact-token', { headers: { Accept: 'application/json' } })
+    .then(response => response.ok ? response.json() : Promise.reject(new Error('token')))
+    .then(data => { csrf = data.token || ''; })
+    .catch(() => { csrf = ''; });
 
-    const open = document.createElement('a');
-    open.href = mailto;
-    open.className = 'textlink';
-    open.textContent = 'Ouvrir ma messagerie';
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!csrf) {
+      showStatus('Le formulaire est temporairement indisponible. Écrivez directement à euloge@oloustream.com.', false);
+      return;
+    }
 
-    const copy = document.createElement('button');
-    copy.type = 'button';
-    copy.id = 'copybrief';
-    copy.textContent = 'Copier le message';
-    copy.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(`${subject}\n\n${body}`);
-        copy.textContent = 'Message copié';
-      } catch {
-        message.textContent = body;
-        copy.textContent = 'Sélectionnez le texte ci-dessus';
-      }
-    });
-
-    status.append(message, open, copy);
+    if (submit) submit.disabled = true;
+    const values = Object.fromEntries(new FormData(form).entries());
+    values.csrf = csrf;
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(values),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) throw new Error(result.message || 'send');
+      showStatus(result.message || 'Votre demande a bien été enregistrée.', true);
+      form.reset();
+    } catch (error) {
+      showStatus(error.message === 'send' ? 'Le service est temporairement indisponible. Écrivez directement à euloge@oloustream.com.' : error.message, false);
+    } finally {
+      if (submit) submit.disabled = false;
+    }
   });
 }

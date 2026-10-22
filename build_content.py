@@ -9,7 +9,14 @@ def page(file,title,desc,content):
  html=html.replace('<meta name="theme-color" content="#141414">','<meta name="robots" content="index,follow"><meta name="theme-color" content="#141414">')
  html=html.replace('<meta property="og:type" content="website">','<meta property="og:type" content="website"><meta property="og:locale" content="fr_FR"><meta name="twitter:card" content="summary">')
  html=html.replace('<button class="menu" aria-expanded="false"','<button class="menu" type="button" aria-expanded="false"')
- html=html.replace('Votre application de messagerie s’ouvrira avec votre demande préremplie. Vous pourrez la relire et l’envoyer vous-même.','Votre message sera préparé. Vous pourrez ouvrir votre messagerie ou le copier.')
+ html=html.replace('Votre application de messagerie s’ouvrira avec votre demande préremplie. Vous pourrez la relire et l’envoyer vous-même.','Votre demande sera envoyée de manière sécurisée. Vous recevrez une confirmation après enregistrement.')
+ html=html.replace('Votre message sera préparé. Vous pourrez ouvrir votre messagerie ou le copier.','Votre demande sera envoyée de manière sécurisée. Vous recevrez une confirmation après enregistrement.')
+ html=html.replace('Ce formulaire ne stocke pas vos informations sur le site et ne les transmet pas automatiquement. Il prépare un email dans votre messagerie.','Ce formulaire enregistre les informations nécessaires au traitement de votre demande et envoie une notification à Coach OLOU. Elles ne sont pas utilisées à d’autres fins.')
+ if file == 'contact.html':
+  html=html.replace('<link rel="stylesheet" href="style.css">','<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="forms.css">')
+  html=html.replace('<form id="contactform">','<form id="contactform" action="/api/contact" method="post">')
+  html=html.replace('<button class="btn" type="submit">Préparer mon email</button>','<input type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true" hidden><label class="consent"><input type="checkbox" name="consent" value="yes" required> J’accepte que mes informations soient utilisées pour traiter ma demande, conformément à la <a href="#confidentialite">politique de confidentialité</a>.</label><button class="btn" type="submit">Envoyer ma demande</button><noscript><p class="formnote">JavaScript est nécessaire pour envoyer le formulaire. Écrivez directement à <a href="mailto:euloge@oloustream.com">euloge@oloustream.com</a>.</p></noscript>')
+  html=html.replace('<div id="formstatus" aria-live="polite" hidden>','<div id="formstatus" aria-live="polite" role="status" hidden>')
  if file == 'index.html':
   marker='<section class="section dark"><div class="wrap split"><div><span class="eyebrow gold">02 / Une conviction, un parcours</span>'
   html=html.replace(marker,proofs+marker)

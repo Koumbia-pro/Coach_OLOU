@@ -5,7 +5,7 @@ Site personnel statique en français, sept pages de contenu responsive et une pa
 Accueil, parcours, quatre expertises, interventions, entreprises et projets filtrables, trois fiches pratiques, contact.
 
 ## Contacts et fonctionnement
-Email euloge@oloustream.com et WhatsApp +226 64 09 31 96 issus du CV fourni. Le formulaire prépare un email via mailto et propose l’ouverture de la messagerie ou la copie du message ; aucun envoi serveur ni stockage de prospects. Les champs obligatoires et le format email sont vérifiés par le navigateur.
+Email euloge@oloustream.com et WhatsApp +226 64 09 31 96 issus du CV fourni. Le formulaire envoie maintenant la demande à l’API Python, l’enregistre dans SQLite et déclenche une notification SMTP après configuration cPanel. Les champs obligatoires et le format email sont vérifiés par le navigateur et le serveur.
 
 ## Points à valider avant ouverture publique
 - Coordonnées reprises du CV 2024.
@@ -19,6 +19,7 @@ Email euloge@oloustream.com et WhatsApp +226 64 09 31 96 issus du CV fourni. Le 
 - `check_site.py` vérifie les fichiers, les liens locaux, les IDs et les éléments obligatoires avant publication.
 - Les expertises présentent maintenant leur public cible, leur déroulement, leurs livrables, une durée indicative, le résultat attendu et une demande de devis. Les durées restent à confirmer selon les offres réellement proposées.
 - Les boutons « Demander un devis » et « Décrire mon besoin » ouvrent le formulaire de contact ; aucun calendrier de réservation n’est encore connecté.
+- L’API Python (`app.py`) traite maintenant les demandes côté serveur avec SQLite, protection CSRF, honeypot, limitation de fréquence, notification SMTP et export CSV protégé. Elle doit être configurée dans cPanel avant utilisation publique.
 
 ## Édition
 Les pages publiques sont dans dist. build_content.py génère le contenu commun et les pages ; dist/style.css et dist/site.js contiennent le style et les interactions. Aucun CMS tiers n'est installé ; modifications via Sites.

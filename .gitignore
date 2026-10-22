@@ -20,3 +20,6 @@ Thumbs.db
 node_modules/
 coverage/
 .pytest_cache/
+data/
+*.sqlite3
+*.sqlite3-*

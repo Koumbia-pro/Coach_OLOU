@@ -17,6 +17,7 @@ EXPECTED = {
     "contact.html",
     "404.html",
     "style.css",
+    "forms.css",
     "site.js",
     "robots.txt",
     "assets/euloge-olou.png",
@@ -94,7 +95,7 @@ def main() -> int:
     contact = PUBLIC / "contact.html"
     if contact.is_file():
         contact_text = contact.read_text(encoding="utf-8")
-        for required in ('name="name"', 'name="email"', 'name="message"', 'id="contactform"'):
+        for required in ('name="name"', 'name="email"', 'name="message"', 'name="consent"', 'name="website"', 'action="/api/contact"', 'id="contactform"'):
             if required not in contact_text:
                 errors.append(f"contact.html: élément requis absent -> {required}")
 
